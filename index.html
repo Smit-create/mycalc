@@ -59,11 +59,12 @@
       var amounts = [25000, 30000, 50000, 60000, 75000, 85000, 100000]
       var finalString = "<table><tr><th>Percentage</th><th>Calculated Value</th><th>Amount</th><th>Units</th></tr>";
       for (let i = 0; i < values.length; i++) {
-        var result1 = inputValue * (1+values[i]/100);
-        finalString += `<tr><td>${values[i]}%</td><td>${result1.toFixed(2)}</td>`
+        var result1 = (inputValue * (1+values[i]/100)).toFixed(2);
+        result1 = roundToNearest0_05(result1);
+        finalString += `<tr><td>${values[i]}%</td><td>${result1}</td>`
         if (i < amounts.length) {
-            var result2 = amounts[i]/inputValue;
-            finalString += `<td>${amounts[i]/5}:${amounts[i]}</td><td>${result2.toFixed(2)}</td>`
+            var result2 = Math.floor(amounts[i]/inputValue);
+            finalString += `<td>${amounts[i]/5}:${amounts[i]}</td><td>${result2}</td>`
         }
         finalString += "</tr>"
       }
@@ -71,6 +72,9 @@
 
       resultElement.innerHTML = finalString;
     });
+    function roundToNearest0_05(value) {
+      return Math.round(value * 20) / 20;
+    }
   </script>
 </body>
 </html>
