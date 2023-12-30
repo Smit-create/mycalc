@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-time Percentage Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      text-align: center;
+      margin: 20px;
+    }
+    h1 {
+      color: #2ecc71;
+    }
+    table {
+      margin: 0 auto;
+    }
+    th, td {
+      padding: 10px;
+    }
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+    }
+    #result {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Real-time Percentage Calculator</h1>
+  <table>
+    <tr>
+      <th><label for="numberInput">Enter a number:</label></th>
+      <td><input type="number" id="numberInput" placeholder="Enter a number"></td>
+    </tr>
+  </table>
+  <div id="result"></div>
+
+  <script>
+    var inputElement = document.getElementById('numberInput');
+    var resultElement = document.getElementById('result');
+
+    inputElement.addEventListener('input', function () {
+      var inputValue = inputElement.value;
+
+      if (!inputValue || isNaN(inputValue)) {
+        resultElement.innerHTML = 'Please enter a valid number.';
+        return;
+      }
+
+      var values = [-2, -1.75, -1.5, -1.25, -1, -0.75, -0.5, -0.3, -0.2, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6]
+      var amounts = [25000, 30000, 50000, 60000, 75000, 85000, 100000]
+      var finalString = "<table><tr><th>Percentage</th><th>Calculated Value</th><th>Amount</th><th>Units</th></tr>";
+      for (let i = 0; i < values.length; i++) {
+        var result1 = inputValue * (1+values[i]/100);
+        finalString += `<tr><td>${values[i]}%</td><td>${result1.toFixed(2)}</td>`
+        if (i < amounts.length) {
+            var result2 = amounts[i]/inputValue;
+            finalString += `<td>${amounts[i]/5}:${amounts[i]}</td><td>${result2.toFixed(2)}</td>`
+        }
+        finalString += "</tr>"
+      }
+      finalString += "</table>"
+
+      resultElement.innerHTML = finalString;
+    });
+  </script>
+</body>
+</html>
